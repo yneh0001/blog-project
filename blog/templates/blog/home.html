@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+<div class="container mt-5 mb-3">
+
+
+{% block content %}
+
+  <div class="row">
+    <!--sidebar-->
+    {% if user.is_authenticated %}
+      <div class="col-md-4">
+        <div class="content-section">
+          <h3 class="display-6">THE DAILY BLOG</h3>
+          <p class='text-muted'>keep up to date with our latest announcements
+            <ul class="list-group">
+              <li class="list-group-item list-group-item-light">Latest Posts</li>
+              <li class="list-group-item list-group-item-light">Announcements</li>
+              <li class="list-group-item list-group-item-light">Calendars</li>
+              <li class="list-group-item list-group-item-light">Anything</li>
+            </ul>
+          </p>
+        </div>
+  
+      </div>
+      
+      <a href="{% url 'post-create' %}" class="btn btn-success btn-lg btn-block mt-4" role="button" aria-pressed="true"> Add New Blog</a>
+      
+      
+    {% endif %}
+  </div>
+
+  <div class="container mt-5 mb-3">
+  
+    <div class="row">
+        {% for post in posts %}
+          <div class="col-lg-4 my-4">
+              <div class="card shadow border-warning" style="width: 20rem; height: 33rem;">
+                <img src="/media/{{post.image}}" class="card-img-top" alt="..." height="250px"> 
+                  <div class="card-body">
+                    </h5> <a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a> <br><small class="ms-1 text-muted">by {{post.author}} on {{post.date_posted|date:"F d, Y"}}</small></h5>
+                    <p class="card-text">{{post.content| truncatechars:210}}</p>
+                  </div>
+                </div>
+          </div>
+        {% endfor %}
+    </div>
+  </div>
+{% endblock content %}
